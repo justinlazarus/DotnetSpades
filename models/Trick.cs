@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace spades.Models;
 
 public class Trick {
@@ -6,7 +8,7 @@ public class Trick {
     public DateTime EndStamp { get; set; }
 
     // parents
-    public Hand Hand { get; set; }
+    public Hand Hand { get; set; } = null!;
 
     // children
     public ICollection<TrickElement> TrickElements { get; } = new List<TrickElement>();

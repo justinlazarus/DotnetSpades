@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace spades.Models;
 
 public class TrickElement {
@@ -5,6 +7,6 @@ public class TrickElement {
     public DateTime PlayStamp { get; set; }
 
     // parents
-    public Trick Trick { get; set; }
-    public Card Card { get; set; }
+    public Trick Trick { get; set; } = null!;
+    public Card Card { get; set; } = null!;
 }

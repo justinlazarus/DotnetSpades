@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace spades.Models;
 
 public class Hand {
@@ -6,7 +8,7 @@ public class Hand {
     public DateTime EndStamp { get; set; }
 
     // parents
-    public Game Game { get; set; }
+    public Game Game { get; set; } = null!;
 
     // children
     public ICollection<Bid> Bids { get; } = new List<Bid>();

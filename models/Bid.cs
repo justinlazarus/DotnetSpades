@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace spades.Models;
 
 public class Bid {
@@ -5,6 +7,6 @@ public class Bid {
     public int TrickCount { get; set; }
 
     // parents
-    public Hand Hand { get; set; }
-    public Player Player { get; set; }
+    public Hand Hand { get; set; } = null!;
+    public Player Player { get; set; } = null!;
 }
