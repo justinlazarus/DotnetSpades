@@ -6,8 +6,7 @@ namespace spades.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GameController : ControllerBase
-{
+public class GameController : ControllerBase {
     private readonly SpadesContext _context;
 
     public GameController(SpadesContext context) => _context = context;
