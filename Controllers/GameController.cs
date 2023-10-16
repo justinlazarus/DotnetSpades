@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using spades.Models;
+using SQLitePCL;
 
 namespace spades.Controllers;
 
@@ -7,17 +9,23 @@ namespace spades.Controllers;
 [Route("[controller]")]
 public class GameController : ControllerBase
 {
+    private readonly SpadesContext _context;
 
-    private readonly ILogger<GameController> _logger;
-
-    public GameController(ILogger<GameController> logger)
-    {
-        _logger = logger;
+    public GameController(SpadesContext context) {
+        _context = context;
     }
 
     [HttpGet(Name = "GetGame")]
-    public Game Get()
-    {
-        return new Game();
+    public async Task<ActionResult<List<Game>>> Get() {
+        var games = new List<Game>();
+        return Ok(await _context.Games.ToListAsync());
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Game>> Get(int id) {
+        var game = await _context.Games.FindAsync(id);
+        if (game == null) return BadRequest("Game not found.");
+        return Ok(game);
+    }
+
 }

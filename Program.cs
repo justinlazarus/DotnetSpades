@@ -1,6 +1,13 @@
+global using spades.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<SpadesContext>(options => {
+    options.UseSqlite(builder.Configuration.GetConnectionString("SpadesDb"));
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
