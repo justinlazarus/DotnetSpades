@@ -5,5 +5,5 @@ public class Game {
     public DateTime StartStamp { get; set; }
     public DateTime? EndStamp { get; set; }
 
-    public ICollection<Hand> Hands { get; } = new List<Hand>();
+    public ICollection<Hand> Hands { get; set; }
 }

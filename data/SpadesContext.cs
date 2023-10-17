@@ -21,6 +21,12 @@ public class SpadesContext : DbContext {
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.Entity<Game>()
+            .HasMany(e => e.Hands)
+            .WithOne(e => e.Game)
+            .HasForeignKey(e => e.GameId)
+            .HasPrincipalKey(e => e.Id);
+
         modelBuilder.Entity<Card>().HasData(
 
             // spades

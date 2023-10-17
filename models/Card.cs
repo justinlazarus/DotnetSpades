@@ -5,6 +5,5 @@ public class Card{
     public int Suit { get; set; }
     public int Value { get; set; }
 
-    // children
-    public ICollection<TrickElement> TrickElements { get; } = new List<TrickElement>();
+    public ICollection<TrickElement> TrickElements { get; set; }
 }
