@@ -13,7 +13,6 @@ public class GameController : ControllerBase {
 
     [HttpGet(Name = "GetGame")]
     public async Task<ActionResult<List<Game>>> Get() {
-        var games = new List<Game>();
         return Ok(await _context.Games.ToListAsync());
     }
 

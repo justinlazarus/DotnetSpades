@@ -6,7 +6,8 @@ public class TrickElement {
     public int Id { get; set; }
     public DateTime PlayStamp { get; set; }
 
-    // parents
-    public Trick Trick { get; set; } = null!;
-    public Card Card { get; set; } = null!;
+    public int TrickId {get; set; }
+    public virtual Trick Trick { get; set; } = null!;
+    public int CardId { get; set; }
+    public virtual Card Card { get; set; } = null!;
 }

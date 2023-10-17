@@ -7,10 +7,9 @@ public class Hand {
     public DateTime StartStamp { get; set; }
     public DateTime EndStamp { get; set; }
 
-    // parents
-    public Game Game { get; set; } = null!;
+    public int GameId { get; set; } 
+    public virtual Game Game { get; set; } = null!;
 
-    // children
     public ICollection<Bid> Bids { get; } = new List<Bid>();
     public ICollection<Trick> Tricks { get; } = new List<Trick>();
 }

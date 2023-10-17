@@ -7,9 +7,8 @@ public class Trick {
     public DateTime StartStamp { get; set; }
     public DateTime? EndStamp { get; set; }
 
-    // parents
-    public Hand Hand { get; set; } = null!;
+    public int HandId { get; set; }
+    public virtual Hand Hand { get; set; } = null!;
 
-    // children
     public ICollection<TrickElement> TrickElements { get; } = new List<TrickElement>();
 }
