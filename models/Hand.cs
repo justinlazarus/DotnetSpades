@@ -4,12 +4,12 @@ namespace spades.Models;
 
 public class Hand {
     public int Id { get; set; }
-    public int GameId { get; set; }
     public DateTime StartStamp { get; set; }
     public DateTime? EndStamp { get; set; }
 
+    public int GameId { get; set; }
     public Game Game { get; set; }
 
-    public ICollection<Bid> Bids { get; set; }
-    public ICollection<Trick> Tricks { get; set; }
+    public List<Bid> Bids { get; } = new();
+    public List<Trick> Tricks { get; } = new();
 }

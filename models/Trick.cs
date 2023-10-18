@@ -10,5 +10,5 @@ public class Trick {
 
     public Hand Hand { get; set; }
 
-    public ICollection<TrickElement> TrickElements { get; set; }
+    public List<TrickElement> TrickElements { get; } = new();
 }

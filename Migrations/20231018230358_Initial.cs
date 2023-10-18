@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace spades.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +34,7 @@ namespace spades.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     StartStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndStamp = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    EndStamp = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,7 +62,7 @@ namespace spades.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     StartStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndStamp = table.Column<DateTime>(type: "TEXT", nullable: true),
                     GameId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -80,9 +82,9 @@ namespace spades.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TrickCount = table.Column<int>(type: "INTEGER", nullable: false),
                     HandId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TrickCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,9 +109,9 @@ namespace spades.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    HandId = table.Column<int>(type: "INTEGER", nullable: false),
                     StartStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    HandId = table.Column<int>(type: "INTEGER", nullable: false)
+                    EndStamp = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -128,9 +130,9 @@ namespace spades.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PlayStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
                     TrickId = table.Column<int>(type: "INTEGER", nullable: false),
                     CardId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PlayStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
                     PlayerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -153,6 +155,65 @@ namespace spades.Migrations
                         principalTable: "Tricks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cards",
+                columns: new[] { "Id", "Suit", "Value" },
+                values: new object[,]
+                {
+                    { 1, 1, 2 },
+                    { 2, 1, 3 },
+                    { 3, 1, 4 },
+                    { 4, 1, 5 },
+                    { 5, 1, 6 },
+                    { 6, 1, 7 },
+                    { 7, 1, 8 },
+                    { 8, 1, 9 },
+                    { 9, 1, 10 },
+                    { 10, 1, 11 },
+                    { 11, 1, 12 },
+                    { 12, 1, 13 },
+                    { 13, 1, 14 },
+                    { 14, 2, 2 },
+                    { 15, 2, 3 },
+                    { 16, 2, 4 },
+                    { 17, 2, 5 },
+                    { 18, 2, 6 },
+                    { 19, 2, 7 },
+                    { 20, 2, 8 },
+                    { 21, 2, 9 },
+                    { 22, 2, 10 },
+                    { 23, 2, 11 },
+                    { 24, 2, 12 },
+                    { 25, 2, 13 },
+                    { 26, 2, 14 },
+                    { 27, 3, 2 },
+                    { 28, 3, 3 },
+                    { 29, 3, 4 },
+                    { 30, 3, 5 },
+                    { 31, 3, 6 },
+                    { 32, 3, 7 },
+                    { 33, 3, 8 },
+                    { 34, 3, 9 },
+                    { 35, 3, 10 },
+                    { 36, 3, 11 },
+                    { 37, 3, 12 },
+                    { 38, 3, 13 },
+                    { 39, 3, 14 },
+                    { 40, 4, 2 },
+                    { 41, 4, 3 },
+                    { 42, 4, 4 },
+                    { 43, 4, 5 },
+                    { 44, 4, 6 },
+                    { 45, 4, 7 },
+                    { 46, 4, 8 },
+                    { 47, 4, 9 },
+                    { 48, 4, 10 },
+                    { 49, 4, 11 },
+                    { 50, 4, 12 },
+                    { 51, 4, 13 },
+                    { 52, 4, 14 }
                 });
 
             migrationBuilder.CreateIndex(

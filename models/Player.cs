@@ -7,6 +7,6 @@ public class Player {
     public string Name { get; set; }
     public string? Nickname { get; set; }
     
-    public ICollection<TrickElement> TrickElements { get; set; }
-    public ICollection<Bid> Bids { get; set; }
+    public List<TrickElement> TrickElements { get; } = new();
+    public List<Bid> Bids { get; } = new();
 }

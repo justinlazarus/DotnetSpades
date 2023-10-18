@@ -27,7 +27,11 @@ public class HandController : ControllerBase {
 
     [HttpPost]
     public async Task<ActionResult<List<Hand>>> AddHand(Hand hand) {
-        _context.Hands.Add(hand);
+        var game = await _context.Games.FindAsync(hand.GameId);
+        if (game is null) return BadRequest("Game not found");
+        hand.Game = game;
+        game.Hands.Add(hand);
+
         await _context.SaveChangesAsync();
 
         return Ok(await _context.Hands.ToListAsync());

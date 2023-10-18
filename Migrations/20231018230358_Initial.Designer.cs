@@ -11,8 +11,8 @@ using spades.Data;
 namespace spades.Migrations
 {
     [DbContext(typeof(SpadesContext))]
-    [Migration("20231017233150_AllDefaults")]
-    partial class AllDefaults
+    [Migration("20231018230358_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -527,7 +527,7 @@ namespace spades.Migrations
             modelBuilder.Entity("spades.Models.TrickElement", b =>
                 {
                     b.HasOne("spades.Models.Card", "Card")
-                        .WithMany("TrickElements")
+                        .WithMany()
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -545,11 +545,6 @@ namespace spades.Migrations
                     b.Navigation("Card");
 
                     b.Navigation("Trick");
-                });
-
-            modelBuilder.Entity("spades.Models.Card", b =>
-                {
-                    b.Navigation("TrickElements");
                 });
 
             modelBuilder.Entity("spades.Models.Game", b =>

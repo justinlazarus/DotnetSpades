@@ -524,7 +524,7 @@ namespace spades.Migrations
             modelBuilder.Entity("spades.Models.TrickElement", b =>
                 {
                     b.HasOne("spades.Models.Card", "Card")
-                        .WithMany("TrickElements")
+                        .WithMany()
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -542,11 +542,6 @@ namespace spades.Migrations
                     b.Navigation("Card");
 
                     b.Navigation("Trick");
-                });
-
-            modelBuilder.Entity("spades.Models.Card", b =>
-                {
-                    b.Navigation("TrickElements");
                 });
 
             modelBuilder.Entity("spades.Models.Game", b =>

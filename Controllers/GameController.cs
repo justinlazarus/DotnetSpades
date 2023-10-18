@@ -19,7 +19,7 @@ public class GameController : ControllerBase {
     [HttpGet("{id}")]
     public async Task<ActionResult<Game>> GetGame(int id) {
         var game = await _context.Games.FindAsync(id);
-        if (game == null) return BadRequest("Game not found.");
+        if (game is null) return BadRequest("Game not found.");
         return Ok(game);
     }
 

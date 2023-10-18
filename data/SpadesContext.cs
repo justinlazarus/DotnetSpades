@@ -4,28 +4,32 @@ using Microsoft.EntityFrameworkCore;
 namespace spades.Data;
 
 public class SpadesContext : DbContext {
-    public DbSet<Bid> Bids { get; set; } = null!;
-    public DbSet<Card> Cards { get; set; } = null!;
-    public DbSet<Game> Games { get; set; } = null!;
-    public DbSet<Hand> Hands { get; set; } = null!;
-    public DbSet<Player> Players { get; set; } = null!;
-    public DbSet<Trick> Tricks { get; set; } = null!;
-    public DbSet<TrickElement> TrickElemenents { get; set; } = null!;
+    public DbSet<Bid> Bids { get; set; }
+    public DbSet<Card> Cards { get; set; }
+    public DbSet<Game> Games { get; set; }
+    public DbSet<Hand> Hands { get; set; }
+    public DbSet<Player> Players { get; set; }
+    public DbSet<Trick> Tricks { get; set; }
+    public DbSet<TrickElement> TrickElemenents { get; set; }
 
     protected readonly IConfiguration Configuration;
 
     public SpadesContext(IConfiguration configuration) => Configuration = configuration;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        optionsBuilder.UseSqlite(Configuration.GetConnectionString("SpadesDb"));
-    }
+    protected override void OnConfiguring(DbContextOptionsBuilder options) 
+        => options.UseSqlite(Configuration.GetConnectionString("SpadesDb"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
         modelBuilder.Entity<Game>()
-            .HasMany(e => e.Hands)
-            .WithOne(e => e.Game)
-            .HasForeignKey(e => e.GameId)
-            .HasPrincipalKey(e => e.Id);
+            .Property(g => g.StartStamp)
+            .HasColumnType("datetime")
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+        modelBuilder.Entity<Hand>()
+            .Property(h => h.StartStamp)
+            .HasColumnType("datetime")
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         modelBuilder.Entity<Card>().HasData(
 
