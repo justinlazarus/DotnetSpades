@@ -27,23 +27,25 @@ public class HandController : ControllerBase {
     [HttpPost("/deal")]
     public async Task<ActionResult<List<HandPlayerCard>>> Deal(int handId) {
         var hand = await _context.Hands.FindAsync(handId);
-	if (hand is null) return BadRequest("Hand not found.");
+        if (hand is null) return BadRequest("Hand not found.");
 
         var cards = await _context.Cards.ToListAsync();
+        var handPlayers = await _context.HandPlayers.Where(h => h.HandId == handId).ToListAsync();
 
-	// todo :: SHUFFLE
-	foreach (HandPlayer player in await _context.HandPlayers.Where(h => h.HandId == handId).ToListAsync()) {
+        // todo :: SHUFFLE
+        foreach (HandPlayer hp in handPlayers) {
             foreach (Card card in cards.GetRange(0,13)) {
-	        _context.HandPlayerCards.Add(new HandPlayerCard {
-		    HandId = hand.Id,
-	            PlayerId = player.Id,
-		    CardId = card.Id
-		});
-		cards.RemoveRange(0,13);
-	    }
-	}
-	await _context.SaveChangesAsync();
-	return Ok(await _context.HandPlayerCards.ToListAsync());
+                _context.HandPlayerCards.Add(new HandPlayerCard {
+                    HandId = hp.HandId,
+                    PlayerId = hp.PlayerId,
+                    CardId = card.Id
+                });
+            }
+            cards.RemoveRange(0,13);
+        }
+
+        await _context.SaveChangesAsync();
+        return Ok(await _context.HandPlayerCards.ToListAsync());
     }
 
     [HttpPost]
