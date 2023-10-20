@@ -1,10 +1,10 @@
 namespace spades.Models;
 
-public class Trick {
+public class HandPlayer {
     public int Id { get; set; }
     public int HandId { get; set; }
-    public DateTime StartStamp { get; set; }
-    public DateTime? EndStamp { get; set; }
+    public int PlayerId { get; set; }
 
     public Hand Hand { get; set; } = null!;
+    public Player Player { get; set; } = null!;
 }

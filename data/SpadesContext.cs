@@ -8,6 +8,8 @@ public class SpadesContext : DbContext {
     public DbSet<Card> Cards { get; set; }
     public DbSet<Game> Games { get; set; }
     public DbSet<Hand> Hands { get; set; }
+    public DbSet<HandPlayer> HandPlayers { get; set; }
+    public DbSet<HandPlayerCard> HandPlayerCards { get; set; }
     public DbSet<Player> Players { get; set; }
     public DbSet<Trick> Tricks { get; set; }
     public DbSet<TrickElement> TrickElemenents { get; set; }
@@ -20,16 +22,6 @@ public class SpadesContext : DbContext {
         => options.UseSqlite(Configuration.GetConnectionString("SpadesDb"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
-
-        modelBuilder.Entity<Game>()
-            .Property(g => g.StartStamp)
-            .HasColumnType("datetime")
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-        modelBuilder.Entity<Hand>()
-            .Property(h => h.StartStamp)
-            .HasColumnType("datetime")
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         modelBuilder.Entity<Card>().HasData(
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using spades.Data;
 
@@ -10,9 +11,11 @@ using spades.Data;
 namespace spades.Migrations
 {
     [DbContext(typeof(SpadesContext))]
-    partial class SpadesContextModelSnapshot : ModelSnapshot
+    [Migration("20231020184946_fixnulls")]
+    partial class fixnulls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
@@ -381,8 +384,10 @@ namespace spades.Migrations
                     b.Property<DateTime?>("EndStamp")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("StartStamp")
-                        .HasColumnType("TEXT");
+                    b.Property<DateTime>("StartStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id");
 
@@ -401,61 +406,16 @@ namespace spades.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("StartStamp")
-                        .HasColumnType("TEXT");
+                    b.Property<DateTime>("StartStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
 
                     b.ToTable("Hands");
-                });
-
-            modelBuilder.Entity("spades.Models.HandPlayer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("HandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HandId");
-
-                    b.HasIndex("PlayerId");
-
-                    b.ToTable("HandPlayers");
-                });
-
-            modelBuilder.Entity("spades.Models.HandPlayerCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CardId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("HandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.HasIndex("HandId");
-
-                    b.HasIndex("PlayerId");
-
-                    b.ToTable("HandPlayerCards");
                 });
 
             modelBuilder.Entity("spades.Models.Player", b =>
@@ -550,52 +510,6 @@ namespace spades.Migrations
                         .IsRequired();
 
                     b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("spades.Models.HandPlayer", b =>
-                {
-                    b.HasOne("spades.Models.Hand", "Hand")
-                        .WithMany()
-                        .HasForeignKey("HandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("spades.Models.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hand");
-
-                    b.Navigation("Player");
-                });
-
-            modelBuilder.Entity("spades.Models.HandPlayerCard", b =>
-                {
-                    b.HasOne("spades.Models.Game", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("spades.Models.Game", "Hand")
-                        .WithMany()
-                        .HasForeignKey("HandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("spades.Models.Game", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Card");
-
-                    b.Navigation("Hand");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("spades.Models.Trick", b =>

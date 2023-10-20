@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using spades.Models;
@@ -25,12 +24,33 @@ public class HandController : ControllerBase {
         return Ok(hand);
     }
 
+    [HttpPost("/deal")]
+    public async Task<ActionResult<List<HandPlayerCard>>> Deal(int handId) {
+        var hand = await _context.Hands.FindAsync(handId);
+	if (hand is null) return BadRequest("Hand not found.");
+
+        var cards = await _context.Cards.ToListAsync();
+
+	// todo :: SHUFFLE
+	foreach (HandPlayer player in await _context.HandPlayers.Where(h => h.HandId == handId).ToListAsync()) {
+            foreach (Card card in cards.GetRange(0,13)) {
+	        _context.HandPlayerCards.Add(new HandPlayerCard {
+		    HandId = hand.Id,
+	            PlayerId = player.Id,
+		    CardId = card.Id
+		});
+		cards.RemoveRange(0,13);
+	    }
+	}
+	await _context.SaveChangesAsync();
+	return Ok(await _context.HandPlayerCards.ToListAsync());
+    }
+
     [HttpPost]
-    public async Task<ActionResult<List<Hand>>> AddHand(Hand hand) {
-        var game = await _context.Games.FindAsync(hand.GameId);
+    public async Task<ActionResult<List<Hand>>> AddHand(int gameId) {
+        var game = await _context.Games.FindAsync(gameId);
         if (game is null) return BadRequest("Game not found");
-        hand.Game = game;
-        game.Hands.Add(hand);
+        _context.Hands.Add(new Hand{Game = game});
 
         await _context.SaveChangesAsync();
 
