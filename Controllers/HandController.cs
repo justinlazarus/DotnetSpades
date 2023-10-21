@@ -30,17 +30,17 @@ public class HandController : ControllerBase {
         if (hand is null) return BadRequest("Hand not found.");
 
         var cards = await _context.Cards.ToListAsync();
+	var shuffledCards = cards.OrderBy(c => Guid.NewGuid()).ToList();
         var handPlayers = await _context.HandPlayers.Where(h => h.HandId == handId).ToListAsync();
 
-        // todo :: SHUFFLE
         foreach (HandPlayer hp in handPlayers) {
-            foreach (Card card in cards.GetRange(0,13)) {
+            foreach (Card card in shuffledCards.GetRange(0,13)) {
                 _context.HandPlayerCards.Add(new HandPlayerCard {
 		    HandPlayer = hp,
                     Card = card
                 });
             }
-            cards.RemoveRange(0,13);
+            shuffledCards.RemoveRange(0,13);
         }
 
         await _context.SaveChangesAsync();
