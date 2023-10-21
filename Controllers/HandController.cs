@@ -36,9 +36,8 @@ public class HandController : ControllerBase {
         foreach (HandPlayer hp in handPlayers) {
             foreach (Card card in cards.GetRange(0,13)) {
                 _context.HandPlayerCards.Add(new HandPlayerCard {
-                    HandId = hp.HandId,
-                    PlayerId = hp.PlayerId,
-                    CardId = card.Id
+		    HandPlayer = hp,
+                    Card = card
                 });
             }
             cards.RemoveRange(0,13);
