@@ -30,6 +30,8 @@ public class HandController : ControllerBase {
         if (hand is null) return BadRequest("Hand not found.");
 
         var cards = await _context.Cards.ToListAsync();
+
+	// Although this is a shitty way to shuffle, there are only 52 cards so good enough
 	var shuffledCards = cards.OrderBy(c => Guid.NewGuid()).ToList();
         var handPlayers = await _context.HandPlayers.Where(h => h.HandId == handId).ToListAsync();
 
