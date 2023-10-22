@@ -31,16 +31,20 @@ public class TrickController : ControllerBase {
     public async Task<ActionResult<List<TrickElement>>> PlayCard(int trickId, int hpcId) {
 	var trick = await _context.Tricks.FindAsync(trickId);
 	if (trick is null) return BadRequest("Trick not found");
-
 	var hpc = await _context.HandPlayerCards.FindAsync(hpcId);
 	if (hpc is null) return BadRequest("Hand player card not found");
-
-	_context.TrickElements.Add(new TrickElement{
-	    Trick = trick,
-	    HandPlayerCard = hpc
-        });
+	_context.TrickElements.Add(new TrickElement{ Trick = trick, HandPlayerCard = hpc });
 
 	await _context.SaveChangesAsync();
 	return Ok(await _context.TrickElements.ToListAsync());
+    }
+
+    [HttpPut("/completeTrick")]
+    public async Task<ActionResult<Trick>> CompleteTrick(int trickId) {
+	var trick = await _context.Tricks.FindAsync(trickId);
+	if (trick is null) return BadRequest("Trick not found");
+        trick.EndStamp = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+	return Ok(await _context.Tricks.FindAsync(trickId));
     }
 }

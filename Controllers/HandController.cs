@@ -80,7 +80,7 @@ public class HandController : ControllerBase {
         return Ok(await _context.HandPlayerCards.ToListAsync());
     }
 
-    [HttpPut("/complete")]
+    [HttpPut("/completeHand")]
     public async Task<ActionResult<Hand>> CompleteHand(int handId) {
         var hand = await _context.Hands.FindAsync(handId);
         if (hand is null) return BadRequest("Hand not found.");
@@ -89,12 +89,12 @@ public class HandController : ControllerBase {
         return Ok(await _context.Hands.FindAsync(handId));
     }
     
-    [HttpGet("/getActiveTrick{id}")]
+    [HttpGet("/getActiveTrick")]
     public async Task<ActionResult<List<Trick>>> GetActiveTrick(int handId) {
         var hand = await _context.Hands.FindAsync(handId);
         if (hand is null) return BadRequest("Hand not found.");
         return Ok(
-	    _context.Tricks
+	    await _context.Tricks
 	    .Where(t => t.HandId == handId && t.EndStamp == null)
 	    .ToListAsync()
 	);
