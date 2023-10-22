@@ -24,10 +24,9 @@ public class GameController : ControllerBase {
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<Game>>> AddGame(Game game) {
-        _context.Games.Add(game);
+    public async Task<ActionResult<List<Game>>> AddGame() {
+        _context.Games.Add(new Game());
         await _context.SaveChangesAsync();
-
         return Ok(await _context.Games.ToListAsync());
     }
 
@@ -40,7 +39,6 @@ public class GameController : ControllerBase {
         game.EndStamp = request.EndStamp;
 
         await _context.SaveChangesAsync();
-
         return Ok(await _context.Games.ToListAsync());
     }
 
@@ -51,7 +49,6 @@ public class GameController : ControllerBase {
 
         _context.Games.Remove(game);
         await _context.SaveChangesAsync();
-
         return Ok(await _context.Games.ToListAsync());
     }
 }

@@ -12,7 +12,7 @@ public class SpadesContext : DbContext {
     public DbSet<HandPlayerCard> HandPlayerCards { get; set; }
     public DbSet<Player> Players { get; set; }
     public DbSet<Trick> Tricks { get; set; }
-    public DbSet<TrickElement> TrickElemenents { get; set; }
+    public DbSet<TrickElement> TrickElements { get; set; }
 
     protected readonly IConfiguration Configuration;
 

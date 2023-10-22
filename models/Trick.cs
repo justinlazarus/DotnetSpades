@@ -7,4 +7,6 @@ public class Trick {
     public DateTime? EndStamp { get; set; }
 
     public Hand Hand { get; set; } = null!;
+
+    public Trick() => this.StartStamp = DateTime.UtcNow;
 }

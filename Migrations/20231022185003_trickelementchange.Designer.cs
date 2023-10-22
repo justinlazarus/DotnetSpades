@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using spades.Data;
 
@@ -10,9 +11,11 @@ using spades.Data;
 namespace spades.Migrations
 {
     [DbContext(typeof(SpadesContext))]
-    partial class SpadesContextModelSnapshot : ModelSnapshot
+    [Migration("20231022185003_trickelementchange")]
+    partial class trickelementchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
@@ -598,7 +601,7 @@ namespace spades.Migrations
 
             modelBuilder.Entity("spades.Models.TrickElement", b =>
                 {
-                    b.HasOne("spades.Models.HandPlayerCard", "HandPlayerCard")
+                    b.HasOne("spades.Models.Card", "HandPlayerCard")
                         .WithMany()
                         .HasForeignKey("HandPlayerCardId")
                         .OnDelete(DeleteBehavior.Cascade)
