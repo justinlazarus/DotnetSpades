@@ -26,3 +26,23 @@ Each trick is a collection of trick elements. In the standard game there are 4 e
 each trick representing the cards played by each of the 4 players. Players are stored at the
 trick level to allow different players to pick up a game/hand/trick at any point.
 
+## Controllers
+
+### Game
+
+- StartGame creates a Game, need at least one player
+- FinishGame ends a game regardless of hands/status
+
+### Hand
+
+- StartHand takes a Game, 4 Players - creates first Hand, HandPlayers, HandPlayerCards and
+waits on bids
+- Bid creates a Bid for a given HandPlayer
+- ResumeGame gets active Trick for a given Game/Hand, or creates new Hand if no active Trick
+- FinishHand writes all trick detail to stats, sets EndStamp for Hand
+
+### Trick
+
+- StartTrick takes Hand and creates new Trick
+- Play takes HandPlayerCard and writes new TrickElement
+- FinishTrick sets EndStamp 
