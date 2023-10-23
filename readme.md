@@ -1,5 +1,3 @@
-# Spades
-
 ## Game
 
 Each game is a collection of hands. The number of hands in a game is specified in
@@ -45,4 +43,5 @@ waits on bids
 
 - StartTrick takes Hand and creates new Trick
 - Play takes HandPlayerCard and writes new TrickElement
-- FinishTrick sets EndStamp 
+- FinishTrick sets EndStamp
+- ResumeTrick ? 
